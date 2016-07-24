@@ -3,12 +3,6 @@
 #
 # Should you change your keyboard layout some time, delete
 # this file and re-run i3-config-wizard(1).
-#
-
-# i3 config file (v4)
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -24,12 +18,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# start rofi
+bindsym $mod+d exec "rofi -modi window,run -show run -config ~/.config/rofi"
 
 # change focus
 bindsym $mod+j focus left
@@ -122,7 +112,6 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 assign [class="chromium"]       $workspace2
 assign [class="Firefox"]        $workspace2
 assign [class="Atom"]           $workspace3
-assign [class="Emacs"]          $workspace3
 assign [class="Thunderbird"]    $workspace4
 assign [class="Rhythmbox"]      $workspace10
 
@@ -133,12 +122,12 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# Colour scheme
-set $bg-color 	         #2f343f
-set $inactive-bg-color   #2f343f
-set $text-color          #f3f4f5
-set $inactive-text-color #676E7D
-set $urgent-bg-color     #E53935
+# Colour scheme (customized solarized dark)
+set $bg-color 	         #002b36
+set $bg2-color   #073642
+set $text-color          #839496
+set $inactive-text-color #586e75
+set $urgent-bg-color     #dc322f
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -169,8 +158,8 @@ bindsym $mod+r mode "resize"
 # window colors
 #                       border              background         text         indicator
 client.focused          $bg-color           $bg-color          $text-color  #00ff00
-client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
-client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
+client.unfocused        $bg2-color          $bg2-color $inactive-text-color #00ff00
+client.focused_inactive $bg2-color          $bg2-color $inactive-text-color #00ff00
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color  #00ff00
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -180,7 +169,13 @@ bar {
     tray_output primary
     colors {
         background $bg-color
-        separator #757575
+        separator $text-color
+
+        #                   border      bg         text
+        focused_workspace   $bg2-color  $bg2-color $text-color
+        active_workspace    $bg2-color  $bg2-color $text-color
+        inactive_workspace  $bg-color   $bg-color  $text-color
+        urgent_workspace    #dc322f     #dc322f    $text-color
     }
     separator_symbol "·"
 }
