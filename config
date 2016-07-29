@@ -184,8 +184,9 @@ bar {
 exec --no-startup-id /usr/bin/feh --bg-scale /home/cheukyin699/Pictures/nature.jpg
 
 # Custom commands
-exec --no-startup-id setxkbmap -layout us,us -variant ,colemak -option grp:alt_shift_toggle
+#exec --no-startup-id setxkbmap -layout us,us -variant ,colemak -option grp:alt_shift_toggle
 exec --no-startup-id compton -f
+exec --no-startup-id fcitx
 
 hide_edge_borders both
 new_window 1pixel
@@ -193,11 +194,22 @@ new_window 1pixel
 # Custom bindings
 # Screen locking
 bindsym $mod+shift+x exec dm-tool lock
-# Volume control
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+# XF86 Controls
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
+bindsym XF86AudioMute exec amixer -q set Master toggle
+bindsym XF86AudioPlay exec cmus-remote -u
+bindsym XF86AudioPause exec cmus-remote -u
+bindsym XF86AudioNext exec cmus-remote -n
+bindsym XF86AudioPrev exec cmus-remote -r
+bindsym XF86AudioStop exec cmus-remote -s
+
+bindsym XF86Calculator exec kcalc
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86TouchpadToggle exec /home/cheukyin699/bin/touchtoggle
 # Print screen
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshot-$(date +%Y-%m-%d_%H-%M-%S).png
 bindsym --release $mod+Print exec --no-startup-id scrot -s ~/Pictures/Screenshot-$(date +%Y-%m-%d_%H-%M-%S).png
 # Gnome Settings Daemon
-exec --no-startup-id /usr/lib/gnome-settings-daemon/gnome-settings-daemon
+#exec --no-startup-id /usr/lib/gnome-settings-daemon/gnome-settings-daemon
