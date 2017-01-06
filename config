@@ -182,7 +182,7 @@ bar {
 }
 
 # Set background
-exec --no-startup-id /usr/bin/feh --bg-scale /home/cheukyin699/Pictures/autumn.jpg
+exec /usr/bin/feh --bg-scale /home/cheukyin699/Pictures/autumn.jpg
 
 # Custom commands
 #exec --no-startup-id setxkbmap -layout us,us -variant ,colemak -option grp:alt_shift_toggle
