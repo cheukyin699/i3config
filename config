@@ -13,37 +13,31 @@ font pango:San Francisco Display 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start rofi
-bindsym $mod+d exec "rofi -modi window,run -show run -config ~/.config/rofi"
+bindsym $mod+d exec "rofi -modi window,run,jarvis:~/Documents/Projects/rofi-jarvis-bridge/rofi-jarvis.sh -show run -config ~/.config/rofi"
+
+# Set default keybindings for movement
+set $up l
+set $down k
+set $left j
+set $right semicolon
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -78,11 +72,14 @@ bindsym $mod+minus scratchpad show
 #bindsym $mod+d focus child
 
 set $workspace1 "1 "
-set $workspace2 "2 "
+set $workspace2 "2 "
 set $workspace3 "3 "
 set $workspace4 "4 "
 set $workspace5 "5 "
-set $workspace10 "10 "
+set $workspace6 "6 "
+set $workspace7 "7 "
+set $workspace8 "8 "
+set $workspace10 "10 "
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -90,11 +87,16 @@ bindsym $mod+2 workspace $workspace2
 bindsym $mod+3 workspace $workspace3
 bindsym $mod+4 workspace $workspace4
 bindsym $mod+5 workspace $workspace5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace $workspace10
+
+# make sure all Java windows are floating
+#for_window [instance="sun-awt-X11-XFramePeer"] floating enable
+for_window [class="Reminder"] floating enable
+for_window [class="gnome-calculator"] floating enable
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $workspace1
@@ -102,18 +104,25 @@ bindsym $mod+Shift+2 move container to workspace $workspace2
 bindsym $mod+Shift+3 move container to workspace $workspace3
 bindsym $mod+Shift+4 move container to workspace $workspace4
 bindsym $mod+Shift+5 move container to workspace $workspace5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace $workspace10
 
 # Assigns stuff
-assign [class="chromium"]       $workspace2
+assign [class="Chromium"]       $workspace7
 assign [class="Firefox"]        $workspace2
 assign [class="Atom"]           $workspace3
+assign [class="Eclipse"]        $workspace3
 assign [class="Emacs"]          $workspace3
+assign [class="jetbrains-idea"] $workspace3
+assign [class="jetbrains-studio"] $workspace3
+assign [class="qtcreator"]      $workspace3
 assign [class="Thunderbird"]    $workspace4
+assign [class="Evolution"]      $workspace4
+assign [class="ntcardvt"]       $workspace5
+assign [class="PokeMMO"]        $workspace5
 assign [class="Rhythmbox"]      $workspace10
 
 # reload the configuration file
@@ -125,7 +134,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # Colour scheme (customized solarized dark)
 set $bg-color 	         #002b36
-set $bg2-color   #073642
+set $bg2-color           #073642
 set $text-color          #839496
 set $inactive-text-color #586e75
 set $urgent-bg-color     #dc322f
@@ -166,13 +175,14 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color  #00f
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+    font pango: SanFranciscoDisplay Nerd Font 10
     status_command i3blocks -c ~/.config/i3/i3blocks.conf
     tray_output primary
     colors {
         background $bg-color
         separator $text-color
 
-       #                   border      bg         text
+        #                   border      bg         text
         focused_workspace   $bg2-color  $bg2-color $text-color
         active_workspace    $bg2-color  $bg2-color $text-color
         inactive_workspace  $bg-color   $bg-color  $text-color
@@ -182,37 +192,50 @@ bar {
 }
 
 # Set background
-exec /usr/bin/feh --bg-scale /home/cheukyin699/Pictures/autumn.jpg
+exec --no-startup-id /home/cheukyin699/bin/random_wallpaper
 
 # Custom commands
-#exec --no-startup-id setxkbmap -layout us,us -variant ,colemak -option grp:alt_shift_toggle
 exec --no-startup-id compton -f
-exec --no-startup-id fcitx
 
 hide_edge_borders both
 new_window 1pixel
 
 # Custom bindings
 # Screen locking
-bindsym $mod+shift+x exec dm-tool lock
+bindsym $mod+shift+x exec /home/cheukyin699/bin/i3lock
 # XF86 Controls
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
 bindsym XF86AudioMute exec amixer -q set Master toggle
-bindsym XF86AudioPlay exec cmus-remote -u
-bindsym XF86AudioPause exec cmus-remote -u
-bindsym XF86AudioNext exec cmus-remote -n
-bindsym XF86AudioPrev exec cmus-remote -r
-bindsym XF86AudioStop exec cmus-remote -s
+#bindsym XF86AudioPlay exec cmus-remote -u
+#bindsym XF86AudioPause exec cmus-remote -u
+#bindsym XF86AudioNext exec cmus-remote -n
+#bindsym XF86AudioPrev exec cmus-remote -r
+#bindsym XF86AudioStop exec cmus-remote -s
+bindsym XF86AudioPlay exec rhythmbox-client --play-pause
+bindsym XF86AudioPause exec rhythmbox-client --play-pause
+bindsym XF86AudioNext exec rhythmbox-client --next
+bindsym XF86AudioPrev exec rhythmbox-client --previous
+bindsym XF86AudioStop exec rhythmbox-client --stop
 
 bindsym XF86Calculator exec gnome-calculator
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
-bindsym $mod+KP_Add exec xbacklight -inc 10
-bindsym $mod+KP_Subtract exec xbacklight -dec 10
+bindsym $mod+kP_Add exec xbacklight -inc 10
+bindsym $mod+kP_Subtract exec xbacklight -dec 10
 bindsym XF86TouchpadToggle exec /home/cheukyin699/bin/touchtoggle
 # Print screen
 bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshot-$(date +%Y-%m-%d_%H-%M-%S).png
 bindsym --release $mod+Print exec --no-startup-id scrot -s ~/Pictures/Screenshot-$(date +%Y-%m-%d_%H-%M-%S).png
 # Gnome Settings Daemon
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gnome-settings-daemon
+# Dunst notification daemon
+exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
+# Redshift
+exec --no-startup-id redshift
+# Remove screen saver (blank screen)
+exec --no-startup-id xset s 0 0
+exec --no-startup-id xset s noblank
+# KDE Connect
+exec --no-startup-id /usr/lib/kdeconnectd
+#exec --no-startup-id indicator-kdeconnect
