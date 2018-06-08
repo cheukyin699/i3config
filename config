@@ -212,11 +212,11 @@ bindsym XF86AudioMute exec amixer -q set Master toggle
 #bindsym XF86AudioNext exec cmus-remote -n
 #bindsym XF86AudioPrev exec cmus-remote -r
 #bindsym XF86AudioStop exec cmus-remote -s
-bindsym XF86AudioPlay exec rhythmbox-client --play-pause
-bindsym XF86AudioPause exec rhythmbox-client --play-pause
-bindsym XF86AudioNext exec rhythmbox-client --next
-bindsym XF86AudioPrev exec rhythmbox-client --previous
-bindsym XF86AudioStop exec rhythmbox-client --stop
+bindsym XF86AudioPlay exec rhythmbox-client --play-pause --no-start
+bindsym XF86AudioPause exec rhythmbox-client --play-pause --no-start
+bindsym XF86AudioNext exec rhythmbox-client --next --no-start
+bindsym XF86AudioPrev exec rhythmbox-client --previous --no-start
+bindsym XF86AudioStop exec rhythmbox-client --stop --no-start
 
 bindsym XF86Calculator exec gnome-calculator
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
