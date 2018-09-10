@@ -76,7 +76,7 @@ set $workspace2 "2 "
 set $workspace3 "3 "
 set $workspace4 "4 "
 set $workspace5 "5 "
-set $workspace6 "6 "
+set $workspace6 "6"
 set $workspace7 "7 "
 set $workspace8 "8 "
 set $workspace10 "10 "
@@ -202,7 +202,7 @@ new_window 1pixel
 
 # Custom bindings
 # Screen locking
-bindsym $mod+shift+x exec /home/cheukyin699/bin/i3lock
+bindsym --release $mod+shift+x exec /home/cheukyin699/bin/i3lock
 # XF86 Controls
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
@@ -225,8 +225,8 @@ bindsym $mod+kP_Add exec xbacklight -inc 10
 bindsym $mod+kP_Subtract exec xbacklight -dec 10
 bindsym XF86TouchpadToggle exec /home/cheukyin699/bin/touchtoggle
 # Print screen
-bindsym Print exec --no-startup-id scrot ~/Pictures/Screenshot-$(date +%Y-%m-%d_%H-%M-%S).png
-bindsym --release $mod+Print exec --no-startup-id scrot -s ~/Pictures/Screenshot-$(date +%Y-%m-%d_%H-%M-%S).png
+bindsym --release Print exec --no-startup-id /home/cheukyin699/bin/screenshot normal
+bindsym --release $mod+Print exec --no-startup-id /home/cheukyin699/bin/screenshot crop
 # Gnome Settings Daemon
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gnome-settings-daemon
 # Dunst notification daemon
@@ -238,4 +238,5 @@ exec --no-startup-id xset s 0 0
 exec --no-startup-id xset s noblank
 # KDE Connect
 exec --no-startup-id /usr/lib/kdeconnectd
-#exec --no-startup-id indicator-kdeconnect
+# rescuetime time tracker
+exec --no-startup-id /usr/bin/rescuetime
